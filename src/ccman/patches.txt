@@ -1,0 +1,4 @@
+ccman.patches.ccman.v0_1.create_backup_directory_in_sites
+ccman.patches.ccman.v0_1.create_app_directory_in_bench
+ccman.patches.ccman.v0_1.checkout_ccman_to_master_branch
+ccman.patches.ccman.v0_1.create_pids_directory_in_bench

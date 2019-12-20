@@ -1,0 +1,28 @@
+pyyaml
+virtualenv
+addict
+click
+click-completion
+click-didyoumean
+gitpython
+python-gitlab
+semver
+jinja2
+-e git://github.com/achillesrasquinha/honcho.git#egg=honcho
+# ansible
+prompt-toolkit==1.0.15
+ipython==5.8.0
+jupyter==1.0.0
+jupyter-console==5.2.0
+pgcli==1.10.3
+keyrings.alt
+psycopg2<2.8
+psycopg2-binary
+ngxtop
+dataset
+slackclient
+requests
+redis
+rq
+dropbox
+cryptography

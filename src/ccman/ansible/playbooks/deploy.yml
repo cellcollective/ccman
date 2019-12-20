@@ -1,0 +1,13 @@
+---
+- hosts: "{{ hosts | default('localhost') }}"
+  remote_user: "{{ user | default('root') }}"
+  
+  tasks:
+    - name: "Updating Cell Collective Manager"
+      command: "{{ bench }}/.ccenv/bin/ccman update --bench {{ bench }} --ccman-only"
+      
+    - name: "Updating Cell Collective"
+      command: "{{ bench }}/.ccenv/bin/ccman update --bench {{ bench }} --mode {{ mode | default('development') }} --branch {{ branch | default('develop') }} {% if config is defined %}{{ '--vars ' + config }}{% endif %}"
+
+    - name: "Restarting Cell Collective"
+      command: "{{ bench }}/.ccenv/bin/ccman start  --bench {{ bench }} --mode production --no-install --no-build"

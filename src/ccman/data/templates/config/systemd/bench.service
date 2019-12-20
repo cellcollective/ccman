@@ -1,0 +1,11 @@
+[Unit]
+Description=Cell Collective Bench ({{ bench.name }}) Processes
+After=network.target
+
+[Service]
+User={{ user }}
+ExecStart={{ bench.path }}/.ccenv/bin/ccman start --bench {{ bench.path }} --mode production --no-install --no-build
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

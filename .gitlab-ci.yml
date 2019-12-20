@@ -1,0 +1,111 @@
+image: registry.gitlab.com/helikarlab/docker/ci
+
+# Stages
+stages:
+  - build
+  - test
+  - release
+  - deploy-test
+  - deploy
+
+services:
+  - postgres:latest
+  - redis:latest
+
+# Global Variables
+variables:
+  # System Environment Variables
+  LC_ALL:             C.UTF-8
+  LANG:               C.UTF-8
+  DEBIAN_FRONTEND:    noninteractive
+
+  # Service Environment Variables (postgresql Docker)
+  POSTGRES_DB:        test-db
+  POSTGRES_USER:      test-user
+  POSTGRES_PASSWORD:  test-password
+
+  # Custom  Environment Variables
+  JAVA_MAJOR_VERSION: "8"
+  GRADLE_VERSION:     "2.14.1"
+  NODE_MAJOR_VERSION: "10"
+  PIPCACHEDIR:        $CI_PROJECT_DIR/.cache/pip
+
+  # Makefile Overrides
+  ENVIRONMENT:        test
+  VERBOSE:            "true"
+  PYTHONPATH:         python
+  VIRTUALENV:         virtualenv
+  VENVDIR:            $CI_PROJECT_DIR/.venv
+
+  # ccman Variables
+  ccman:              $CI_PROJECT_DIR/.venv/bin/ccman
+
+  CC_GITLAB_TOKEN:    $GITLAB_TOKEN
+  CC_VERBOSE:         "true"
+  CC_BENCH:           "~/test-bench"
+  CC_DB_HOST:         postgres
+  CC_CACHE_HOST:      redis
+
+  SITE:               test-site
+
+  TIMEOUT:            "90"
+
+  # Global Cache
+cache:
+  paths:
+    - $PIPCACHEDIR
+    - ~/db.dump.gz
+
+before_script:
+  - make env install
+  
+build:
+  stage: build
+  script:
+    # Test ccman command
+    - $ccman --help
+    # Initialize Bench
+    - $ccman init $CC_BENCH --site $SITE
+    
+    # Download Test DataBase Dump
+    - curl -sL http://static.cellcollective.org/db.dump.gz -o ~/db.dump.gz
+
+    # Restore DataBase into Bench
+    # NOTE(achillesrasquinha): As of now, restores are still failing but that doesn't hamper the Application Server from booting.
+    # TODO(achillesrasquinha): Diagnose the above issue and remove --silent flag on success.
+    - $ccman restore --site $SITE ~/db.dump.gz --silent
+    
+    # Start Bench Services
+    - $ccman start --no-install --no-build &
+    - sleep $TIMEOUT
+
+    # Check Status
+    - $ccman status --ok
+
+test:
+  stage: test
+  script:
+    # It isn't necessary to test against multiple Python Versions.
+    # In case you're going ahead, make sure you change the CI Image to support multiple Python Versions.
+    - make test ARGS="-e py36"
+
+release:
+  stage: release
+  only:
+    - master
+  script:
+    - npx semantic-release
+
+deploy-test:
+  stage: deploy-test
+  script:
+    - echo $ANSIBLE_INVENTORY /etc/ansible/hosts
+    - $ccman deploy --host test
+
+deploy:
+  stage: deploy
+  only:
+    - tags
+  script:
+    - echo $ANSIBLE_INVENTORY /etc/ansible/hosts
+    - $ccman deploy --host production

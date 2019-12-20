@@ -1,0 +1,11 @@
+{
+    "{{ bench.mode }}":
+    {
+        "username": "{{ bench.site.config.get('database_username') }}",
+        "password": "{{ bench.site.config.get('database_password') }}",
+        "database": "{{ bench.site.config.get('database_name') }}",
+            "host": "{{ bench.config.get('database_host') }}",
+            "port":  {{ bench.config.get('database_port') }},
+         "dialect": "postgres"
+    }
+}

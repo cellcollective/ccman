@@ -1,0 +1,56 @@
+{
+      "name": "Cell Collective",
+      "title": "Interactive Modeling of Biological Networks",
+      "description": "Cell Collective is an interactive, open and collaborative modeling platform for Biological Networks for researchers, students and teachers worldwide.",
+      "color":
+      {
+            "primary": "#1ABC9C"
+      },
+      "social":
+      {
+            "facebook":
+            {
+                  "username": "CellCollectiveByDC",
+                    "app_id": "1902437750060978"
+            },
+            "twitter":
+            {
+                  "username": "biocollective"
+            },
+            "linkedin":
+            {
+                  "username": "discovery-collective"
+            }
+      },
+      "contact":
+      {
+            "email":
+            {
+                  "hello": "support@cellcollective.org"
+            },
+            "phone": "+14025478904"
+      },
+          "date": "{{ date }}",
+       "version": "{{ bench.version }}",
+        "branch": "{{ bench.repo.active_branch }}",
+        "commit": "{{ bench.repo.head.commit }}",
+           "api": "{{ api | default('http://{{ bench.host.app }}:{{ bench.port.app }}/') }}",
+    "sentry_dsn": "{{ sentry_dsn | default('https://a6b0d432d4c44dea94b5328a889af6c4@sentry.io/1211542') }}",
+          "mode": "{{ mode | default('development') }}",
+       "domains": [
+            { "name": "research", "title": "Research", "priority": 1, "image": "/landing/research/logo-rcc.png" },
+            { "name": "teaching", "title": "Teaching", "priority": 2, "image": "/landing/teaching/logo-tcc.png" },
+            { "name": "learning", "title": "Learning", "priority": 3, "image": "/landing/learning/logo-lcc.png" }
+       ],
+          "urls":
+          {
+                    "base": "{{ urls.base     | default('https://cellcollective.org')          }}",
+                "research": "{{ urls.research | default('https://research.cellcollective.org') }}",
+                   "learn": "{{ urls.learn    | default('https://learn.cellcollective.org')    }}",
+                   "teach": "{{ urls.teach    | default('https://teach.cellcollective.org')    }}",
+                 "support": "https://support.cellcollective.org"
+          },
+      "host": { "web": "{{ bench.host.web | default('127.0.0.1') }}" },
+      "port": { "web": "{{ bench.port.web | default(5000) }} "},
+      "google_site_verification_token": "vAwPZmLI7KVaH4GSwpAL5PGnCmrePwNnkTxstQJap8w"
+}
