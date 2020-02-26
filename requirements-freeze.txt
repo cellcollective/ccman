@@ -1,7 +1,7 @@
 addict==2.2.0
 alabaster==0.7.12
 alembic==1.0.5
-ansible==2.7.4
+ansible==2.7.16
 apipkg==1.5
 asn1crypto==0.24.0
 astroid==2.1.0
