@@ -11,7 +11,7 @@ autopep8==1.4.3
 Babel==2.6.0
 banal==0.4.0
 bcrypt==3.1.4
-bleach==3.0.2
+bleach==3.1.4
 bumpversion==0.5.3
 -e git+git@git.unl.edu:helikarlab/ccman.git@50b6e2a84ac59dbfc9ca62f20a9abb3060101179#egg=ccman
 certifi==2018.11.29
