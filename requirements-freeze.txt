@@ -68,7 +68,7 @@ nbconvert==5.4.0
 nbformat==4.4.0
 ngxtop==0.0.2
 normality==0.6.1
-notebook==5.7.2
+notebook==6.1.5
 packaging==18.0
 pandocfilters==1.4.2
 paramiko==2.4.2
